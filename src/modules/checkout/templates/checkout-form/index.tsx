@@ -24,6 +24,11 @@ export default async function CheckoutForm({
     return null
   }
 
+  // Log payment methods in development to debug
+  if (process.env.NODE_ENV === "development" && paymentMethods) {
+    console.log("Available payment methods:", paymentMethods.map((p: any) => p.id))
+  }
+
   return (
     <div className="w-full grid grid-cols-1 gap-y-8">
       <Addresses cart={cart} customer={customer} />

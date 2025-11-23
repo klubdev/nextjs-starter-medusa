@@ -34,7 +34,7 @@ export const paymentInfoMap: Record<
     title: "Manual Payment",
     icon: <CreditCard />,
   },
-  // Stripe Extended providers
+  // Stripe Extended providers - various possible ID formats
   "pp_stripe-extended_stripe-card": {
     title: "Credit card",
     icon: <CreditCard />,
@@ -48,6 +48,19 @@ export const paymentInfoMap: Record<
     icon: <CreditCard />,
   },
   "pp_stripe-extended_stripe-paypal": {
+    title: "PayPal",
+    icon: <PayPal />,
+  },
+  // Additional possible formats
+  "pp_stripe-extended_stripe-card_stripe-extended": {
+    title: "Credit card",
+    icon: <CreditCard />,
+  },
+  "pp_stripe-extended_stripe-klarna_stripe-extended": {
+    title: "Klarna",
+    icon: <CreditCard />,
+  },
+  "pp_stripe-extended_stripe-paypal_stripe-extended": {
     title: "PayPal",
     icon: <PayPal />,
   },

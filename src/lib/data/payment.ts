@@ -21,15 +21,20 @@ export const listCartPaymentMethods = async (regionId: string) => {
         query: { region_id: regionId },
         headers,
         next,
-        cache: "force-cache",
+        cache: "no-store", // Changed from force-cache to no-store to avoid stale data
       }
     )
-    .then(({ payment_providers }) =>
-      payment_providers.sort((a, b) => {
+    .then(({ payment_providers }) => {
+      // Log for debugging
+      if (process.env.NODE_ENV === "development") {
+        console.log("Payment providers returned:", payment_providers.map(p => p.id))
+      }
+      return payment_providers.sort((a, b) => {
         return a.id > b.id ? 1 : -1
       })
-    )
-    .catch(() => {
+    })
+    .catch((error) => {
+      console.error("Error fetching payment providers:", error)
       return null
     })
 }
