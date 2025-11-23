@@ -34,18 +34,50 @@ export const paymentInfoMap: Record<
     title: "Manual Payment",
     icon: <CreditCard />,
   },
+  // Stripe Extended providers
+  "pp_stripe-extended_stripe-card": {
+    title: "Credit card",
+    icon: <CreditCard />,
+  },
+  "pp_stripe-extended_stripe-extended": {
+    title: "Credit card",
+    icon: <CreditCard />,
+  },
+  "pp_stripe-extended_stripe-klarna": {
+    title: "Klarna",
+    icon: <CreditCard />,
+  },
+  "pp_stripe-extended_stripe-paypal": {
+    title: "PayPal",
+    icon: <PayPal />,
+  },
   // Add more payment providers here
 }
 
 // This only checks if it is native stripe or medusa payments for card payments, it ignores the other stripe-based providers
 export const isStripeLike = (providerId?: string) => {
-  return (
-    providerId?.startsWith("pp_stripe_") || providerId?.startsWith("pp_medusa-")
-  )
+  if (!providerId) return false
+  // Regular Stripe and Medusa Payments
+  if (providerId.startsWith("pp_stripe_") || providerId.startsWith("pp_medusa-")) {
+    return true
+  }
+  // Stripe Extended - only card payments need card input
+  if (providerId.startsWith("pp_stripe-extended_")) {
+    // Only card payments need Stripe card input, not Klarna or PayPal
+    return (
+      providerId.includes("stripe-card") || 
+      providerId.includes("stripe-extended") ||
+      (!providerId.includes("klarna") && !providerId.includes("paypal"))
+    )
+  }
+  return false
 }
 
 export const isPaypal = (providerId?: string) => {
-  return providerId?.startsWith("pp_paypal")
+  return (
+    providerId?.startsWith("pp_paypal") ||
+    providerId?.includes("stripe-paypal")
+  )
 }
 export const isManual = (providerId?: string) => {
   return providerId?.startsWith("pp_system_default")
